@@ -23,3 +23,7 @@ https://colab.research.google.com/drive/1tZtxGP1B0gFNLiAVnFNEmIUKr1y2J4Ta?usp=sh
 # PRESENTACIÓN
 
 Disponible en: https://docs.google.com/presentation/d/1wFD95IvHmxr3oWKwislMtzi_sooNNYs-CMHx7Rlzb7k/edit?usp=sharing
+
+# CICLO DE VIDA DEL DATO
+
+![Ciclo de vida del dato](https://github.com/C0A0A/PF_BI_Olist/blob/main/diagrama-flujo-datos.jpg)
