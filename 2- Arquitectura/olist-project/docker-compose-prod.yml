@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  olist-api:
+    build: ./
+    container_name: olist_api
+    ports:
+      - 8000:8000
+    environment:
+      - DB_CONNECTION_STRING=${DB_CONNECTION_STRING}
+    volumes:
+      - ./:/api/
+    depends_on:
+      - postgres
+    command: sh -c "uvicorn main:app --reload --host 0.0.0.0"
+    networks:
+      - olist_network
+    
+  pg4admin:
+    image: dpage/pgadmin4
+    container_name: olist_pg4admin
+    ports:
+      - 8080:80
+    environment:
+      - PGADMIN_DEFAULT_PASSWORD=1234
+      - PGADMIN_DEFAULT_EMAIL=user@pgadmin.com
+    volumes:
+      - pg4admin_data:/var/lib/pgadmin
+    networks:
+      - olist_network
+
+volumes:
+  pg4admin_data:
+    driver: "local"
+  postgres_data:
+    driver: "local"
+
+networks:
+  olist_network:
+    driver: bridge
