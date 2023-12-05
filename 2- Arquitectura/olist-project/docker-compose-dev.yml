@@ -15,6 +15,22 @@ services:
     command: sh -c "uvicorn main:app --reload --host 0.0.0.0"
     networks:
       - olist_network
+      
+  postgres:
+    image: postgres:14.4-alpine
+    container_name: olist_postgres_db
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/sql-scripts:/database/sql-scripts
+      - ./database/sql-scripts/db_creation.sql:/docker-entrypoint-initdb.d/db_creation.sql
+    networks:
+      - olist_network
     
   pg4admin:
     image: dpage/pgadmin4
