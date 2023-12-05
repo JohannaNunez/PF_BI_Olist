@@ -13,6 +13,8 @@ RUN python -m venv venv
 
 ENV PATH="/api/venv/bin:$PATH"
 
+ENV PYTHONPATH=/api/:$PYTHONPATH
+
 RUN pip install --no-cache-dir -r requirements.txt 
 
 RUN apt-get autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/*
