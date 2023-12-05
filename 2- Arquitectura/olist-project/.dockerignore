@@ -21,3 +21,6 @@ Thumbs.db
 *.swp
 *.tmp
 *.log
+
+.pytest_cache
+.git

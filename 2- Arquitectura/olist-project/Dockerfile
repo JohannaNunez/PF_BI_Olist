@@ -1,4 +1,4 @@
-FROM python:3.9-slim
+FROM tiangolo/uvicorn-gunicorn-fastapi:python3.9-slim
 
 WORKDIR /api
 
@@ -10,6 +10,8 @@ RUN apt-get update \
     && apt-get -y install libpq-dev gcc
 
 RUN pip install --no-cache-dir -r requirements.txt
+
+RUN apt-get autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 ENV PORT=8000
 
