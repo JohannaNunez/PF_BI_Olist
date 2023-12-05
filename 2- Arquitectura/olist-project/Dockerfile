@@ -11,4 +11,8 @@ RUN apt-get update \
 
 RUN pip install --no-cache-dir -r requirements.txt
 
+ENV PORT=8000
+
+EXPOSE 8000
+
 CMD ["uvicorn", "main:app", "--reload"]
