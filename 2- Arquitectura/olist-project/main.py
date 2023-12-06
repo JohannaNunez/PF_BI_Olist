@@ -1,8 +1,8 @@
-from fastapi import FastAPI, Depends, HTTPException, status, Request
+from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.security import APIKeyHeader
 from fastapi.responses import RedirectResponse, FileResponse
 
-from src.models.apiDto import DwTables
+from src.models.apiDto import DwTables, TransferMethod
 from src.datasources.main import get_data_from_db_source, get_datasource_list
 from src.etl.main import exec_etl_job, transfer_stg_to_prod
 from src.utils.log import logInfo
@@ -30,11 +30,12 @@ def read_root():
     return RedirectResponse(url="/docs", status_code=303)
 
 @app.get("/datasources")
-def get_all_datasources():
+def get_all_datasources(api_key: str = Depends(get_api_key)):
     return get_datasource_list()
 
+
 @app.get("/datasources/{data_source}")
-def get_data(data_source: str):
+def get_data(data_source: str, api_key: str = Depends(get_api_key)):
     try:
         file_url = get_data_from_db_source(data_source)
         return FileResponse(file_url, filename=data_source, media_type="text/csv")
@@ -58,9 +59,9 @@ def exec_job_stg(job_key: DwTables, api_key: str = Depends(get_api_key)):
     return result
 
 @app.post("/etl-jobs/prod/{job_key}")
-def exec_job_prod(job_key: DwTables, api_key: str = Depends(get_api_key)):
+def exec_job_prod(job_key: DwTables, method: TransferMethod, api_key: str = Depends(get_api_key)):
     try:
-        rows_affected = transfer_stg_to_prod(job_key)
+        rows_affected = transfer_stg_to_prod(job_key, method)
         result = {"success": True, "message": "OK", "rows_affected": rows_affected}
     except Exception as e:
         logInfo(f"Error en etl-jobs-prod: {e}")

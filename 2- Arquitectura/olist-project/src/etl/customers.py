@@ -4,6 +4,7 @@ import os
 from settings.url_constants import DATASETS_DIR, DATASOURCES_DIR
 from src.etl.etl_functions import UNSPECIFIED, export_to_csv, capitalize_text
 from src.models.dbConnection import db_instance
+from src.models.apiDto import TransferMethod
 
 def clean_olist_customers_dataset():
     # Leemos el csv con pandas
@@ -49,6 +50,9 @@ def load_clean_customers_dataset():
     rows_imported = db_instance.load_csv_to_db(csv_path, "customers")
     return rows_imported
 
-def transfer_stg_to_prod_customers():
-    rows_transfered = db_instance.transfer_stg_to_prod_table("customers")
+def transfer_stg_to_prod_customers(method):
+    if method == TransferMethod.SP:
+        rows_transfered = db_instance.exec_procedure("transfer_data_from_stg_to_customers")
+    else:
+        rows_transfered = db_instance.transfer_stg_to_prod_table("customers")
     return rows_transfered

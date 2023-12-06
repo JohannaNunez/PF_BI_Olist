@@ -4,6 +4,7 @@ import os
 from settings.url_constants import DATASETS_DIR, DATASOURCES_DIR
 from src.etl.etl_functions import export_to_csv
 from src.models.dbConnection import db_instance
+from src.models.apiDto import TransferMethod
 
 def clean_olist_order_payments_dataset():
     # Leemos el csv con pandas
@@ -29,6 +30,9 @@ def load_clean_order_payments_dataset():
     rows_imported = db_instance.load_csv_to_db(csv_path, "order_payments")
     return rows_imported
 
-def transfer_stg_to_prod_order_payments():
-    rows_transfered = db_instance.transfer_stg_to_prod_table("order_payments")
+def transfer_stg_to_prod_order_payments(method):
+    if method == TransferMethod.SP:
+        rows_transfered = db_instance.exec_procedure("transfer_data_from_stg_to_order_payments")
+    else:
+        rows_transfered = db_instance.transfer_stg_to_prod_table("order_payments")
     return rows_transfered

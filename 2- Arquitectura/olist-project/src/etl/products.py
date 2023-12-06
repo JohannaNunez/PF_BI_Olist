@@ -4,6 +4,7 @@ import os
 from settings.url_constants import DATASETS_DIR, DATASOURCES_DIR
 from etl.etl_functions import UNSPECIFIED, export_to_csv
 from src.models.dbConnection import db_instance
+from src.models.apiDto import TransferMethod
 
 def clean_olist_products_dataset():
     # Abrimos los datasets en dataframe de pandas
@@ -38,6 +39,9 @@ def load_clean_products_dataset():
     rows_imported = db_instance.load_csv_to_db(csv_path, "products")
     return rows_imported
 
-def transfer_stg_to_prod_products():
-    rows_transfered = db_instance.transfer_stg_to_prod_table("products")
+def transfer_stg_to_prod_products(method):
+    if method == TransferMethod.SP:
+        rows_transfered = db_instance.exec_procedure("transfer_data_from_stg_to_products")
+    else:
+        rows_transfered = db_instance.transfer_stg_to_prod_table("products")
     return rows_transfered

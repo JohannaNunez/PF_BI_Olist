@@ -4,6 +4,7 @@ import os
 from settings.url_constants import DATASETS_DIR, DATASOURCES_DIR
 from etl.etl_functions import format_str_to_datetime, export_to_csv
 from src.models.dbConnection import db_instance
+from src.models.apiDto import TransferMethod
 
 def clean_olist_order_reviews_dataset():
     # Leemos el csv con pandas
@@ -36,6 +37,9 @@ def load_clean_order_reviews_dataset():
     rows_imported = db_instance.load_csv_to_db(csv_path, "order_reviews")
     return rows_imported
 
-def transfer_stg_to_prod_order_reviews():
-    rows_transfered = db_instance.transfer_stg_to_prod_table("order_reviews")
+def transfer_stg_to_prod_order_reviews(method):
+    if method == TransferMethod.SP:
+        rows_transfered = db_instance.exec_procedure("transfer_data_from_stg_to_order_reviews")
+    else:
+        rows_transfered = db_instance.transfer_stg_to_prod_table("order_reviews")
     return rows_transfered
