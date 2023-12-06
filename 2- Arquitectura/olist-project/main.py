@@ -6,6 +6,7 @@ from src.models.apiDto import DwTables
 from src.datasources.main import get_data_from_db_source, get_datasource_list
 from src.etl.main import exec_etl_job, transfer_stg_to_prod
 from src.utils.log import logInfo
+from settings import API_TOKEN
 
 app = FastAPI()
 
@@ -14,7 +15,7 @@ api_key_header = APIKeyHeader(name="Authorization", auto_error=False)
 
 # Dependencia para validar el token de API
 def get_api_key(api_key: str = Depends(api_key_header)):
-    if api_key == "token_secreto":
+    if api_key == API_TOKEN:
         return api_key
     else:
         raise HTTPException(

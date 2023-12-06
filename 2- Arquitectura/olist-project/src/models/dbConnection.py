@@ -56,6 +56,8 @@ class DBConnection:
         return df
 
     def exec_procedure(self, sp_name, params=None):
+        connection = None
+        result = False
         try:
             connection = self.engine.raw_connection()
             cursor = connection.cursor()
@@ -64,33 +66,39 @@ class DBConnection:
             else:
                 cursor.callproc(sp_name)
             connection.commit()
-            return True
+            if connection:
+                connection.close()
+            result = True
         except Exception as e:
             logInfo(f"Error en exec_procedure: {e}")
-            return False
+        
+        if connection:
+            connection.close()
+        return result
 
     def exec_query(self, query):
         connection = None
+        result = False
         try:
             with self.engine.connect() as connection:
                 connection.execute(text(query))
             if connection:
                 connection.close()
-            return True
+            result = True
         except Exception as e:
             logInfo(f"Error en exec_query: {e}")
-            return False
+            
+        if connection:
+            connection.close()
+        return result
         
     def drop_table(self, table_name):
         try:
-            connection = None
             drop_table_query = text(f'DROP TABLE IF EXISTS {table_name};')
             with self.engine.connect() as connection:
                 transaction = connection.begin()
                 connection.execute(drop_table_query)
                 transaction.commit()
-            if connection:
-                connection.close()
 
         except Exception as e:
             transaction.rollback()
@@ -100,11 +108,14 @@ class DBConnection:
         rows_imported = 0
         self.drop_table(f"stg_{table_name}")
         try:
-            for chunk in pd.read_csv(csv_path, chunksize=1000):
-                chunk.to_sql(f"stg_{table_name}", self.engine, if_exists="append", index=False)
-                rows_imported += len(chunk)
+            with self.engine.begin() as connection:
+                for chunk in pd.read_csv(csv_path, chunksize=1000):
+                    chunk.to_sql(f"stg_{table_name}", connection, if_exists="append", index=False)
+                    rows_imported += len(chunk)
         except Exception as e:
-            logInfo(f"Error en load_df_to_db: {e}")
+            logInfo(f"Error en load_df_to_db: {e}")       
+            if 'ROLLBACK' not in str(e):
+                self.engine.execute('ROLLBACK')
 
         return rows_imported
 
@@ -112,10 +123,13 @@ class DBConnection:
         rows_imported = 0
         try:
             stg_df = pd.read_sql_table(f"stg_{table_name}", self.engine)
-            stg_df.to_sql(table_name, self.engine, if_exists='append', index=False, method='multi')
-            rows_imported = len(stg_df)
+            with self.engine.begin() as connection:
+                stg_df.to_sql(table_name, connection, if_exists='append', index=False, method='multi')
+                rows_imported = len(stg_df)
         except Exception as e:
             logInfo(f"Error en transfer_stg_to_prod_table: {e}")
+            if 'ROLLBACK' not in str(e):
+                self.engine.execute('ROLLBACK')
 
         return rows_imported
 
