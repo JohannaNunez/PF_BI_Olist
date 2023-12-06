@@ -55,23 +55,18 @@ class DBConnection:
         
         return df
 
-    def exec_procedure(self, sp_name, params=None):
+    def exec_procedure(self, sp_name, params=""):
         connection = None
         result = False
         try:
-            connection = self.engine.raw_connection()
-            cursor = connection.cursor()
-            if params:
-                cursor.callproc(sp_name, params)
-            else:
-                cursor.callproc(sp_name)
-            connection.commit()
-            if connection:
-                connection.close()
-            result = True
+            with self.engine.connect() as connection:
+                transaction = connection.begin()
+                connection.execute(text(f'CALL {sp_name} {params};'))
+                transaction.commit()
+
         except Exception as e:
+            transaction.rollback()
             logInfo(f"Error en exec_procedure: {e}")
-        
         if connection:
             connection.close()
         return result
@@ -93,6 +88,8 @@ class DBConnection:
         return result
         
     def drop_table(self, table_name):
+        connection = None
+        result = False
         try:
             drop_table_query = text(f'DROP TABLE IF EXISTS {table_name};')
             with self.engine.connect() as connection:
@@ -103,6 +100,9 @@ class DBConnection:
         except Exception as e:
             transaction.rollback()
             logInfo(f"Error en drop_table: {e}")
+        if connection:
+            connection.close()
+        return result
         
     def load_csv_to_db(self, csv_path, table_name):
         rows_imported = 0
