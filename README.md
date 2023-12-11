@@ -14,21 +14,13 @@ Data Schema Los datos estan divididos en distintos datasets para ser comprendido
 
 La informacion clasificada fue removida.
 
-# Dataset
+# Datasets
 
-El dataset con el que se trabaja en este proyecto fue proveido por Olist. Se cuenta con 11 dataset que refieren a datos sobre las órdenes, productos, categorías de productos, pagos de órdenes, datos de clientes, datos de vendedores, zonas geográficas, entre otras. 
-En base a esos conjuntos se ha iniciado el análisis del proyecto.
+Se cuenta con 11 datasets que refieren a datos sobre las órdenes, productos, categorías de productos, pagos de órdenes, datos de clientes, datos de vendedores, zonas geográficas, entre otras. En base a esos conjuntos se ha iniciado el análisis del proyecto.
 
-# EDA
+# EDA Análisis e Informe
 
-Se ha realizado un análisis exploratorio de datos sobre cada uno de los dataset del proyecto.
-
-El análisis exploratorio de datos se encuentra disponible en el siguiente espacio:
-[https://colab.research.google.com/drive/1tZtxGP1B0gFNLiAVnFNEmIUKr1y2J4Ta?usp=sharing](https://colab.research.google.com/drive/1tZtxGP1B0gFNLiAVnFNEmIUKr1y2J4Ta?usp=sharing#scrollTo=xd6-Mz7XJfBP)
-
-# Informe del EDA
-
-Disponible en: https://colab.research.google.com/drive/1tZtxGP1B0gFNLiAVnFNEmIUKr1y2J4Ta?usp=sharing#scrollTo=wGjsjnX1VCrt
+Se ha realizado un análisis exploratorio de datos sobre cada uno de los dataset del proyecto. Disponible en: https://github.com/C0A0A/PF_BI_Olist/blob/main/1-%20EDA/An%C3%A1lisis_EDA_y_EDA_PF_Consultor_BI_Grupo_6.ipynb
 
 # Presentación Avance Sprint 1
 
@@ -50,9 +42,9 @@ Disponible en: https://github.com/C0A0A/PF_BI_Olist/blob/main/2-%20Arquitectura/
 
 ![Dashboarb-MVP.png](https://github.com/C0A0A/PF_BI_Olist/blob/main/3-%20Analitycs/Dashboarb-MVP.png)
 
-# Predicción ARIMA MVP
+# Modelo Predictivo ARIMA MVP
 
-https://colab.research.google.com/drive/1V3kTMNbsuP4tdTOTHT8HYMP4KD8LLLtd?usp=sharing
+Disponible en: https://github.com/C0A0A/PF_BI_Olist/blob/main/4-%20ML/Prediccion_PF_Consultor_BI_Grupo_6.ipynb
 
 # Presentación Avance Sprint 2
 
@@ -60,4 +52,23 @@ https://docs.google.com/presentation/d/1aA-qDT_98h2zXOgji52HPClorW7Ov_iAyRxW8jGS
 
 # Análisis Predicción ARIMA
 
-https://docs.google.com/document/d/1sIk7ZscV-ct4i6VgReL-7f45ENXBinUBUlsMYC0TCZE/edit?usp=sharing
+Disponible en: https://github.com/C0A0A/PF_BI_Olist/blob/main/4-%20ML/An%C3%A1lisis%20Predicci%C3%B3n%20ARIMA.pdf
+
+# Informe Dashboard
+
+
+
+## PRODUCTO FINAL
+
+# API para Procesamiento del Dato
+
+https://dashboard.render.com/web/srv-clnaep9ll56s73fen540
+
+# Dashboard y Modelo ML Predictivo
+
+https://olist-analytics-views-ktr2lsfg5acxjnzcrm9cbf.streamlit.app/
+
+# Análisis Final
+
+
+# Presentación Final
