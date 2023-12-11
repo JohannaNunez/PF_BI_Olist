@@ -1,0 +1,13 @@
+altair
+pandas
+streamlit
+pandas
+scikit-learn
+numpy
+matplotlib
+seaborn
+datetime
+statsmodels
+pmdarima
+psycopg2-binary
+SQLAlchemy
