@@ -54,10 +54,6 @@ https://docs.google.com/presentation/d/1aA-qDT_98h2zXOgji52HPClorW7Ov_iAyRxW8jGS
 
 Disponible en: https://github.com/C0A0A/PF_BI_Olist/blob/main/4-%20ML/An%C3%A1lisis%20Predicci%C3%B3n%20ARIMA.pdf
 
-# Informe Dashboard
-
-
-
 ## PRODUCTO FINAL
 
 # API para Procesamiento del Dato
@@ -74,5 +70,4 @@ Proyecto: https://github.com/C0A0A/PF_BI_Olist/blob/main/5-%20Producto%20final/s
 
 # Análisis Final
 
-
-# Presentación Final
+Disponible en: https://github.com/C0A0A/PF_BI_Olist/blob/main/5-%20Producto%20final/Informe%20Final.pdf
