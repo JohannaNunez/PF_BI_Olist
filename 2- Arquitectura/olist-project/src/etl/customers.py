@@ -25,9 +25,6 @@ def clean_olist_customers_dataset():
     df_customers['customer_city'] = df_customers['customer_city'].str.replace("palmeira d oeste", "palmeira d'oeste")
     df_customers['customer_city'] = df_customers['customer_city'].str.replace("santa barbara d oeste", "santa barbara d'oeste")
 
-    # Capitalizamos los nombres de las ciudades
-    df_customers["customer_city"] = capitalize_text(df_customers, "customer_city")
-
     # Aseguramos los campos que no deben ser null 
     df_customers['customer_zip_code_prefix'].fillna(UNSPECIFIED, inplace=True)
     df_customers['customer_city'].fillna(UNSPECIFIED, inplace=True)

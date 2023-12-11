@@ -28,9 +28,6 @@ def clean_olist_geolocation_dataset():
     df_geolocation['geolocation_city'] = df_geolocation['geolocation_city'].str.replace("palmeira d oeste", "palmeira d'oeste")
     df_geolocation['geolocation_city'] = df_geolocation['geolocation_city'].str.replace("santa barbara d oeste", "santa barbara d'oeste")
 
-    # Capitalizamos los nombres de las ciudades
-    df_geolocation["geolocation_city"] = capitalize_text(df_geolocation, "geolocation_city")
-
     # Aseguramos el orden de las columnas 
 
     ordered_columns = ["geolocation_zip_code_prefix", "geolocation_lat", "geolocation_lng", "geolocation_city", "geolocation_state"]
