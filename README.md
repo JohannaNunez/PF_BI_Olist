@@ -36,7 +36,7 @@ Disponible en: https://docs.google.com/presentation/d/1wFD95IvHmxr3oWKwislMtzi_s
 
 # Ciclo de vida del dato
 
-[!ciclo-vida-dato.png](https://github.com/C0A0A/PF_BI_Olist/blob/main/2-%20Arquitectura/ciclo-vida-dato.png)
+![ciclo-vida-dato.png](https://github.com/C0A0A/PF_BI_Olist/blob/main/2-%20Arquitectura/ciclo-vida-dato.png)
 
 # Diccionario de datos
 
@@ -44,11 +44,11 @@ Disponible en: https://github.com/C0A0A/PF_BI_Olist/blob/main/2-%20Arquitectura/
 
 # Diagrama Entidad Relación
 
-[!DER-final.png](https://github.com/C0A0A/PF_BI_Olist/blob/main/2-%20Arquitectura/DER-final.png)
+![DER-final.png](https://github.com/C0A0A/PF_BI_Olist/blob/main/2-%20Arquitectura/DER-final.png)
 
 # Dashboard MVP
 
-[!Dashboarb-MVP.png](https://github.com/C0A0A/PF_BI_Olist/blob/main/3-%20Analitycs/Dashboarb-MVP.png)
+![Dashboarb-MVP.png](https://github.com/C0A0A/PF_BI_Olist/blob/main/3-%20Analitycs/Dashboarb-MVP.png)
 
 # Predicción ARIMA MVP
 
