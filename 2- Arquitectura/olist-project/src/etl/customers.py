@@ -18,12 +18,12 @@ def clean_olist_customers_dataset():
     df_customers.drop(columns='customer_unique_id', inplace=True)
 
     # Buscamos previamente ciudades a normalizar con ayuda de la funcion find_similar_words y a partir del resultado transformamos lo necesario (ver archivo customer_city_similar_words.txt)
-    df_customers['customer_city'] = df_customers['customer_city'].replace("arraial d ajuda", "arraial d'ajuda")
-    df_customers['customer_city'] = df_customers['customer_city'].replace("dias d avila", "dias d'avila")
-    df_customers['customer_city'] = df_customers['customer_city'].replace("estrela d oeste", "estrela d'oeste")
-    df_customers['customer_city'] = df_customers['customer_city'].replace("mogi-mirim", "mogi mirim")
-    df_customers['customer_city'] = df_customers['customer_city'].replace("palmeira d oeste", "palmeira d'oeste")
-    df_customers['customer_city'] = df_customers['customer_city'].replace("santa barbara d oeste", "santa barbara d'oeste")
+    df_customers['customer_city'] = df_customers['customer_city'].str.replace("arraial d ajuda", "arraial d'ajuda")
+    df_customers['customer_city'] = df_customers['customer_city'].str.replace("dias d avila", "dias d'avila")
+    df_customers['customer_city'] = df_customers['customer_city'].str.replace("estrela d oeste", "estrela d'oeste")
+    df_customers['customer_city'] = df_customers['customer_city'].str.replace("mogi-mirim", "mogi mirim")
+    df_customers['customer_city'] = df_customers['customer_city'].str.replace("palmeira d oeste", "palmeira d'oeste")
+    df_customers['customer_city'] = df_customers['customer_city'].str.replace("santa barbara d oeste", "santa barbara d'oeste")
 
     # Capitalizamos los nombres de las ciudades
     df_customers["customer_city"] = capitalize_text(df_customers, "customer_city")
