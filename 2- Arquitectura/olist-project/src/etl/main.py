@@ -5,6 +5,7 @@ from src.etl.order_reviews import *
 from src.etl.orders import *
 from src.etl.product_category_name import *
 from src.etl.products import *
+from src.etl.geolocation import *
 from src.models.apiDto import DwTables
 
 def exec_etl_job(job_key):
@@ -35,6 +36,10 @@ def exec_etl_job(job_key):
     elif job_key == DwTables.PRODUCTS:
         if clean_olist_products_dataset():
             return load_clean_products_dataset()
+        
+    elif job_key == DwTables.GEOLOCATION:
+        if clean_olist_geolocation_dataset():
+            return load_clean_geolocation_dataset()
     
     else:
         raise Exception("La clave solicitada es inválida")
@@ -61,6 +66,9 @@ def transfer_stg_to_prod(job_key, method):
         
     elif job_key == DwTables.PRODUCTS:
         return transfer_stg_to_prod_products(method)
+    
+    elif job_key == DwTables.GEOLOCATION:
+        return transfer_stg_to_prod_geolocation(method)
     
     else:
         raise Exception("La clave solicitada es inválida")

@@ -62,7 +62,7 @@ CREATE TABLE public.order_items (
 
 CREATE TABLE public.customers (
     customer_id UUID DEFAULT public.uuid_generate_v4() PRIMARY KEY,
-    customer_zip_code_prefix  VARCHAR(20) NOT NULL,
+    customer_zip_code_prefix VARCHAR(20) NOT NULL,
     customer_city VARCHAR(255) NOT NULL,
     customer_state VARCHAR(255) NOT NULL
 );
@@ -83,6 +83,15 @@ CREATE TABLE public.product_category_name_translation (
     translation_id UUID DEFAULT public.uuid_generate_v4() PRIMARY KEY,
     product_category_name VARCHAR(255),
     product_category_name_english VARCHAR(255)
+);
+
+CREATE TABLE geolocation (
+    geolocation_id UUID DEFAULT public.uuid_generate_v4() PRIMARY KEY,
+    geolocation_zip_code_prefix VARCHAR(20) NOT NULL,
+    geolocation_lat DECIMAL(9,6),
+    geolocation_lng DECIMAL(9,6),
+    geolocation_city VARCHAR(255),
+    geolocation_state VARCHAR(255)
 );
 
 ALTER TABLE public.orders
@@ -109,6 +118,6 @@ ALTER TABLE public.product_category_name_translation
 ADD CONSTRAINT unique_product_category_name
 UNIQUE (product_category_name);
 
-
-
-
+ALTER TABLE public.geolocation
+ADD CONSTRAINT unique_geolocation_zip_code_prefix
+UNIQUE (geolocation_zip_code_prefix);

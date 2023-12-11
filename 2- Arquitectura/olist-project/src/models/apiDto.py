@@ -8,6 +8,7 @@ class DwTables(Enum):
     ORDERS = "orders"
     PRODUCT_CATEGORY_NAME_TRANSLATION = "product_category_name_translation"
     PRODUCTS = "products"
+    GEOLOCATION = "geolocation"
 
 class TransferMethod(Enum):
     SP = "sp"

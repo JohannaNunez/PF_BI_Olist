@@ -29,7 +29,6 @@ def clean_olist_customers_dataset():
     df_customers["customer_city"] = capitalize_text(df_customers, "customer_city")
 
     # Aseguramos los campos que no deben ser null 
-    df_customers['customer_zip_code_prefix'] = df_customers['customer_zip_code_prefix']
     df_customers['customer_zip_code_prefix'].fillna(UNSPECIFIED, inplace=True)
     df_customers['customer_city'].fillna(UNSPECIFIED, inplace=True)
     df_customers['customer_state'].fillna(UNSPECIFIED, inplace=True)
