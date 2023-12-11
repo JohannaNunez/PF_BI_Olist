@@ -204,11 +204,87 @@ El precio de los productos varía entre 0.85 y 6735 pesos. El promedio del valor
 - Nulos: Origin tiene 60 registros vacíos.  
 - Información encontrada: Existen 8000 clientes potenciales originados de diferentes formas de marketing como organic search, paid search, social, direct traffic, email, referral, etc. Organic search tiene un total de 2256 registros, paid search 1586 y social 1350.
 
+# Análisis del valor las órdenes en los dataset
+
+En la tabla de ordenes y pagos, (olist_order_payments_dataset) se puede ver tanta cantidad valores de pago como payment_sequential. Es decir, que una orden de pago está dividida en varias secuencias de pago. Esto quiere decir, que cada secuencia de pago tiene un valor de pago asociado y la suma de cada uno de ellos será el total monetario de la orden. 
+
+Asimismo, en la tabla de ordenes y productos, olist_order_items_dataset, se puede entender que una orden tiene asociada varios productos . El valor de cada producto mas su valor de envio, da el mismo total que la orden. 
+
+Al poder ver esto, se puede entender que:
+- existen varios registros con el mismo order_id, no solo por la cantidad de diferentes productos asociados a la orden, si no tambien por las distintas "payment_sequential" con la que cuenta la orden. Cada una de ellas tiene un valor distinto en el pago (payment_installments) pero si se suman, va a dar el total de lo que se pago por producto y la suma de productos, dara el total del pago de la orden.
+
+Por lo tanto se decide:
+
+Realizar una agrupamiento por orden y dejar el valor total unificado en una nueva variable para poder utilizarla en la predicción de ventas.
+
+
+Las tablas a utilizar para el modelo de ventas serán:
+
+Tabla (5): olist_orders_dataset
+- Variables a utilizar:
+ * order_id
+ * order_status: se tomarán aquellas con valor delivered y se excluirán aquellas canceled.
+ *order purchase timestamp (para saber la fecha de la orden)
+
+Tablas y variables a utilizar en el modelado de machine learning
+
+Tabla (6): olist_order_payments_dataset.
+- Variables a utilizar:
+ * order_id
+ * payment sequential (para agrupar la orden y calcular el monto total)
+ * payment value (será la base del monto total de la orden)
+
+Existe dos tablas que aportan información de las ventas, pero a priori se descartan del análisis. Una de ellas contiene información de cuantos productos existen por orden y cuales productos son los comprados. La otra tiene información de las categorías de los productos.
+
+Tabla (3): olist_products_dataset
+- Variables:
+ * product_id
+ * product_category_name
+
+Tabla (7): olist_order_items_dataset
+- Variables:
+ * order_id
+ * order_item_id
+ * product_id
+
+
+
+# Análisis de serie de tiempo - Predicción ARIMA
+
+Se ha decidido implementar un modelo ARIMA para predecir en base al tiempo, los valores de órdenes que se tendrán de aquí a 3 años.
+
+Los pasos que se han tomado son los siguientes:
+
+Resumen: 
+
+1. Preparación de los datos:
+- Carga de datos: Cargar los conjuntos de datos en Python utilizando bibliotecas como Pandas para manipular los datos.
+ - Procesamiento: Se crearán los dataframes necesarios para llegar al dataframe final que se procesará con ARIMA. Se aclara que se ha creado una variables llamado pago_orden que contiene el valor de ventas por orden y valor promedio por mes y año. Esta variable es la variable a predecir..
+2. Aplicación de modelo de series de tiempos:
+
+- Arima:
+Preparación de los Datos: Los datos se agrupan por mes (con el objetivo de obtener una serie temporal más manejable y para ayudar a revelar patrones estacionales o tendencias)
+
+Revisión de la Estacionariedad: Se realizan pruebas de estacionariedad, como la prueba de Dickey-Fuller aumentada, para determinar si es necesario diferenciar los datos para hacerlos estacionarios. Los datos no eran estacionarios, por lo que se aplicó la técnica para convertirlos en estacionarios y poder aplicarles ARIMA.
+
+Identificación de los Parámetros ARIMA: Se utilizaron las funciones de autocorrelación (ACF) y autocorrelación parcial (PACF) para identificar los parámetros p, d, y q del modelo ARIMA.
+
+Ajuste del Modelo ARIMA: Se ajusto el modelo ARIMA con los parámetros identificados a los datos. Y adicionalmente se optimizaron los parámetros con Optuna.
+
+Predicciones: Se realizaron las predicciones para los próximos años.
+
 
 # PRESENTACIÓN
 
-Disponible en: https://docs.google.com/presentation/d/1wFD95IvHmxr3oWKwislMtzi_sooNNYs-CMHx7Rlzb7k/edit?usp=sharing
+Sprint 1 - Disponible en: https://docs.google.com/presentation/d/1wFD95IvHmxr3oWKwislMtzi_sooNNYs-CMHx7Rlzb7k/edit?usp=sharing
+Sprint 2 - Disponible en: https://docs.google.com/presentation/d/1aA-qDT_98h2zXOgji52HPClorW7Ov_iAyRxW8jGSVfw/edit?usp=sharing
 
 # CICLO DE VIDA DEL DATO
 
 ![Ciclo de vida del dato](https://github.com/C0A0A/PF_BI_Olist/blob/main/diagrama-flujo-datos.jpg)
+
+# Código de EDA y Predicciones en Arima.
+
+Ver documentos del proyecto.
+
+Actualización: 11.12.2023
